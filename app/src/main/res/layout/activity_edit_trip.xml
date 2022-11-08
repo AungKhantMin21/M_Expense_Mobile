@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".EditTripActivity">
 
     <ScrollView
         app:layout_constraintTop_toTopOf="parent"
@@ -28,16 +27,16 @@
             app:layout_constraintTop_toTopOf="parent"
             android:orientation="vertical">
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Add a new trip"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textStyle="bold"-->
-<!--                android:textSize="26sp" />-->
+            <!--            <TextView-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="Add a new trip"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textStyle="bold"-->
+            <!--                android:textSize="26sp" />-->
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nameOfTripContainer"
+                android:id="@+id/editNameOfTripContainer"
                 android:hint="Name of Trip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,7 +49,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/nameOfTripTextField"
+                    android:id="@+id/editNameOfTripTextField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -60,7 +59,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/destinationContainer"
+                android:id="@+id/editDestinationContainer"
                 android:hint="Destination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,7 +72,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/destinationTextField"
+                    android:id="@+id/editDestinationTextField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -83,7 +82,7 @@
 
 
             <TextView
-                android:id="@+id/showSelectedDateTextView"
+                android:id="@+id/editShowSelectedDateTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Select Date of Trip : "
@@ -92,7 +91,7 @@
                 />
 
             <Button
-                android:id="@+id/pickupDateBtn"
+                android:id="@+id/editPickupDateBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="13dp"
@@ -103,7 +102,7 @@
                 app:icon="@drawable/ic_baseline_calendar_month_24" />
 
             <TextView
-                android:id="@+id/dateHelpText"
+                android:id="@+id/editDateHelpText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="*Required"
@@ -114,7 +113,7 @@
 
 
             <TextView
-                android:id="@+id/riskRadioTextView"
+                android:id="@+id/editRiskRadioTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Risk Assessment : "
@@ -123,21 +122,21 @@
                 />
 
             <RadioGroup
-                android:id="@+id/riskRadioGroup"
+                android:id="@+id/editRiskRadioGroup"
                 android:checkedButton="@+id/riskBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/riskBtn"
+                    android:id="@+id/editriskBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Yes"/>
 
                 <RadioButton
-                    android:id="@+id/noriskBtn"
+                    android:id="@+id/editnoriskBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -152,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
                 <AutoCompleteTextView
-                    android:id="@+id/travelMethodDropdown"
+                    android:id="@+id/editTravelMethodDropdown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -166,7 +165,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/descriptionContainer"
+                android:id="@+id/editDescriptionContainer"
                 android:hint="Description (Optional)"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -177,7 +176,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/descriptionTextField"
+                    android:id="@+id/editDescriptionTextField"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:gravity="top"
@@ -204,10 +203,10 @@
                     android:layout_marginEnd="5dp"
                     android:paddingHorizontal="30dp"
                     android:paddingVertical="10dp"
-                    android:id="@+id/cancelBtn"/>
+                    android:id="@+id/updateCancelBtn"/>
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
-                    android:text="Submit"
+                    android:text="Update"
                     android:background="@color/purple_500"
                     android:backgroundTint="@color/purple_500"
                     android:layout_gravity="right"
@@ -215,7 +214,7 @@
                     android:layout_marginEnd="5dp"
                     android:paddingHorizontal="30dp"
                     android:paddingVertical="10dp"
-                    android:id="@+id/submitBtn"/>
+                    android:id="@+id/updateBtn"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

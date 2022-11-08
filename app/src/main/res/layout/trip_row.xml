@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="15dp"
+    android:layout_marginTop="10dp"
     android:background="@color/grey_50">
 
     <LinearLayout
@@ -16,7 +17,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="17dp"
             android:src="@drawable/ic_baseline_location_on_24"
             app:tint="@color/grey" />
 
@@ -50,6 +51,14 @@
                 android:textColor="@color/dark_grey"
                 android:text="Nov 6, 2022"
                 android:textSize="14dp"/>
+
+            <TextView
+                android:id="@+id/to_trip_details_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/purple_500"
+                android:text="See more"
+                android:textSize="12dp"/>
 
             
         </LinearLayout>
