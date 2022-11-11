@@ -14,10 +14,15 @@
         android:theme="@style/Theme.Trip"
         tools:targetApi="31">
         <activity
+            android:name=".SearchActivity"
+            android:exported="false"
+            android:parentActivityName=".HomeActivity"
+            android:label="Search Trip"/>
+        <activity
             android:name=".DetailTripActivity"
             android:exported="false"
             android:label="Trip details"
-            android:parentActivityName=".HomeActivity"/>
+            android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".EditTripActivity"
             android:exported="false"

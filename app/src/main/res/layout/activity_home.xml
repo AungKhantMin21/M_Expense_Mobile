@@ -27,14 +27,68 @@
                 android:text="Add New Trips"
                 app:icon="@drawable/ic_baseline_add_24"/>
 
-            <TextView
-                android:id="@+id/totalTripsText"
-                android:layout_marginTop="19dp"
-                android:textSize="18dp"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_marginTop="15dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textField"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:hint="Search Trip Name"
+                    android:background="@drawable/searchinput"
+                    app:endIconMode="clear_text">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/basicSearchInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <ImageButton
+                    android:id="@+id/basicSeachBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_baseline_search_24"
+                    android:paddingVertical="8dp"
+                    android:background="@drawable/searchbtn_state1"
+                    android:layout_gravity="center"
+                    app:tint="@color/dark_grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Total Trips : 0"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="19dp">
+                <TextView
+                    android:id="@+id/totalTripsText"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="Total Trips : 0"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/backToAll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd"
+                    android:visibility="gone"
+                    android:text="Back to all"
+                    android:textColor="@color/purple_500"
+                    android:backgroundTint="@color/purple_500"/>
+            </LinearLayout>
+
+
+
+
 
 
 

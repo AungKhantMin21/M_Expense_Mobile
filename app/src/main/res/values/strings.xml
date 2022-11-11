@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Trip</string>
+    <string name="app_name">M Expense</string>
 
     <string-array name="travel_method">
         <item>Car</item>

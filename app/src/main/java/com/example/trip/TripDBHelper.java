@@ -129,4 +129,80 @@ public class TripDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, ID_COLUMN + " = ?", new String[]{String.valueOf(id)});
     }
+
+    public ArrayList<Trip> basicSearch(String input){
+        SQLiteDatabase database = this.getReadableDatabase();
+        ArrayList<Trip> searchtripList = new ArrayList<>();
+        input = "'%"+input+"%'";
+        String query = "SELECT * FROM "+ TABLE_NAME + " WHERE "+ NAME_COLUMN + " LIKE  "+input;
+
+        Cursor results = database.rawQuery(query,null);
+
+        if(results.moveToFirst()){
+            do {
+                long id = Long.parseLong(results.getString(0));
+                String name = results.getString(1);
+                String destinaiton = results.getString(2);
+                String date = results.getString(3);
+                boolean risk = results.getInt(4) > 0;
+                String method = results.getString(5);
+                String description = results.getString(6);
+                searchtripList.add(new Trip(id,name,destinaiton,date,risk,method,description));
+            } while (results.moveToNext());
+        }
+        results.close();
+//        searchtripList.add(new Trip(1,"Meeting","Edinburgh","Nov 1, 2022",false,"Train","Goest to london by train"));
+
+
+//        Cursor results = database.query(TABLE_NAME,new String[]{ID_COLUMN,NAME_COLUMN,DESTINATION_COLUMN,DATE_COLUMN,RISK_COLUMN,METHOD_COLUMN,DESCRIPTION_COLUMN},
+//                NAME_COLUMN+" LIKE ?",new String[]{"%"+input+"%"},
+//                null,null,null);
+//
+//        if(results.getCount() != 0){
+//            results.moveToFirst();
+//            int i = 1;
+//            while(!results.isAfterLast()){
+//                long id = Long.parseLong(results.getString(0));
+//                String name = results.getString(1);
+//                String destinaiton = results.getString(2);
+//                String date = results.getString(3);
+//                boolean risk = results.getInt(4) > 0;
+//                String method = results.getString(5);
+//                String description = results.getString(6);
+//                tripList.add(new Trip(id,name,destinaiton,date,risk,method,description));
+//                i++;
+//                results.moveToNext();
+//            } ;
+//        }
+        //results.close();
+
+
+        return searchtripList;
+    }
+
+    public ArrayList<Trip> advanceSearch(String input){
+        SQLiteDatabase database = this.getReadableDatabase();
+        ArrayList<Trip> searchtripList = new ArrayList<>();
+        input = "'%"+input+"%'";
+        String query = "SELECT * FROM "+ TABLE_NAME + " WHERE "+ NAME_COLUMN + " LIKE  "+input + " OR " + DESTINATION_COLUMN + " LIKE  "+input + " OR " + DATE_COLUMN + " LIKE  "+input;
+
+        Cursor results = database.rawQuery(query,null);
+
+        if(results.moveToFirst()){
+            do {
+                long id = Long.parseLong(results.getString(0));
+                String name = results.getString(1);
+                String destinaiton = results.getString(2);
+                String date = results.getString(3);
+                boolean risk = results.getInt(4) > 0;
+                String method = results.getString(5);
+                String description = results.getString(6);
+                searchtripList.add(new Trip(id,name,destinaiton,date,risk,method,description));
+            } while (results.moveToNext());
+        }
+        results.close();
+        return searchtripList;
+    }
+
+
 }
