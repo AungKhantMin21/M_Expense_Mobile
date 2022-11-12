@@ -21,13 +21,13 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class EditTripActivity extends AppCompatActivity {
 
-    Button bSubmit, bPickUpDateBtn, bCancel;
+    Button bSubmit, bPickUpDateBtn, bCancel, bPickUpEndDateBtn;
 
-    TextInputEditText etTripName, etDestination, etDescription;
+    TextInputEditText etTripName, etDestination, etDescription,etBudget;
 
     TextInputLayout lyTripName, lyDestination, lyDescription;
 
-    TextView showSelectedDate;
+    TextView showSelectedDate,showSelectedEndDate, dateHelpText;
 
     AutoCompleteTextView travelDropDown;
 
@@ -63,7 +63,11 @@ public class EditTripActivity extends AppCompatActivity {
         riskButton = (RadioButton) findViewById(R.id.editriskBtn);
         noriskButton = (RadioButton) findViewById(R.id.editnoriskBtn);
 
+        etBudget = findViewById(R.id.editTripBudgetTextField);
+
         bCancel = findViewById(R.id.updateCancelBtn);
+
+        dateHelpText = findViewById(R.id.editDateHelpText);
 
 
 
@@ -81,7 +85,7 @@ public class EditTripActivity extends AppCompatActivity {
 
         MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
 
-        materialDateBuilder.setTitleText("SELECT A DATE");
+        materialDateBuilder.setTitleText("SELECT A START DATE");
 
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
@@ -100,12 +104,42 @@ public class EditTripActivity extends AppCompatActivity {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onPositiveButtonClick(Object selection) {
-                        showSelectedDate.setText("Select Date of Trip : " + materialDatePicker.getHeaderText());
+                        showSelectedDate.setText("Select Start Date of Trip : " + materialDatePicker.getHeaderText());
                     }
                 }
         );
-        //===================== DATE PICKER END HERE ================================
 
+        bPickUpEndDateBtn = findViewById(R.id.editPickupEndDateBtn);
+
+        showSelectedEndDate = findViewById(R.id.editShowSelectedEndDateTextView);
+
+        MaterialDatePicker.Builder materialEndDateBuilder = MaterialDatePicker.Builder.datePicker();
+
+        materialDateBuilder.setTitleText("SELECT AN END DATE");
+
+        final MaterialDatePicker materialEndDatePicker = materialEndDateBuilder.build();
+
+        bPickUpEndDateBtn.setOnClickListener(
+                new View.OnClickListener(){
+
+                    @Override
+                    public void onClick(View view) {
+                        materialEndDatePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+                    }
+                }
+        );
+
+        materialEndDatePicker.addOnPositiveButtonClickListener(
+                new MaterialPickerOnPositiveButtonClickListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onPositiveButtonClick(Object selection) {
+                        showSelectedEndDate.setText("Select End Date of Trip : " + materialEndDatePicker.getHeaderText());
+                    }
+                }
+        );
+
+        //===================== DATE PICKER END HERE ================================
 
         intent = getIntent();
         String id = intent.getStringExtra("id");
@@ -115,14 +149,15 @@ public class EditTripActivity extends AppCompatActivity {
         String risk =intent.getStringExtra("risk");
         String method =intent.getStringExtra("method");
         String description =intent.getStringExtra("description");
-
+        String enddate = intent.getStringExtra("enddate");
+        String budget = intent.getStringExtra("budget");
         _id= Long.parseLong(id);
 
 //        Boolean _risk = Boolean.parseBoolean(risk);
 
         etTripName.setText(name);
         etDestination.setText(destination);
-        showSelectedDate.setText("Select Date of Trip : "+date);
+        showSelectedDate.setText("Select Start Date of Trip : "+date);
 
         if(risk.equals("Yes")){
             riskRadioGroup.check(riskButton.getId());
@@ -130,7 +165,19 @@ public class EditTripActivity extends AppCompatActivity {
             riskRadioGroup.check(noriskButton.getId());
         }
 
-        etDescription.setText(description);
+        if(description != null){
+            etDescription.setText(description);
+        }
+
+        if(enddate != null){
+            showSelectedEndDate.setText("Select End Date of Trip : " + enddate);
+        }
+
+
+        if(budget != null){
+            etBudget.setText(budget);
+        }
+
 
         //======================= DropDown Travel Method ==============================
 
@@ -171,6 +218,12 @@ public class EditTripActivity extends AppCompatActivity {
                     lyDestination.setError("This field is required.");
                     return false;
                 }
+                String date = showSelectedDate.getText().toString();
+                String trip_date = date.substring(28);
+                if(trip_date.length() <= 0){
+                    dateHelpText.setText("This field is required.");
+                    return false;
+                }
                 return true;
             }
         });
@@ -189,12 +242,17 @@ public class EditTripActivity extends AppCompatActivity {
         String trip_name =etTripName.getText().toString();
         String trip_destination = etDestination.getText().toString();
         String trip_description = null;
-        String trip_method = travelDropDown.getText().toString();
+        String trip_method = null;//travelDropDown.getText().toString()
 
         String date = showSelectedDate.getText().toString();
-        String trip_date = date.substring(22);
+        String trip_date = date.substring(28);
 
         boolean trip_risk;
+
+        String end_date = showSelectedEndDate.getText().toString();
+        String trip_end_date = end_date.substring(26);
+
+        String trip_budget = null;
 
         int selectedId = riskRadioGroup.getCheckedRadioButtonId();
         radioButton = (RadioButton) findViewById(selectedId);
@@ -208,7 +266,15 @@ public class EditTripActivity extends AppCompatActivity {
             trip_description = etDescription.getText().toString();
         }
 
-        Trip trip = new Trip(_id,trip_name,trip_destination, trip_date, trip_risk, trip_method,trip_description);
+        if(travelDropDown.getText().toString().length() != 0){
+            trip_method =travelDropDown.getText().toString();
+        }
+
+        if(etBudget.length() != 0){
+            trip_budget = etBudget.getText().toString();
+        }
+
+        Trip trip = new Trip(_id,trip_name,trip_destination, trip_date, trip_risk, trip_method,trip_description,trip_end_date,trip_budget);
 
         dbHelper.updateTrip(trip);
 

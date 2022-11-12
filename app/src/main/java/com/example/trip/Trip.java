@@ -8,10 +8,12 @@ public class Trip {
     private Boolean trip_risk;
     private String trip_method;
     private String trip_description;
+    private String trip_end_date;
+    private String trip_budget;
 
 
     public Trip (long tid, String trip_name, String trip_destination, String trip_date, Boolean trip_risk,
-                 String trip_method, String trip_description){
+                 String trip_method, String trip_description, String trip_end_date, String trip_budget){
         this.tid = tid;
         this.trip_name = trip_name;
         this.trip_destination = trip_destination;
@@ -19,16 +21,20 @@ public class Trip {
         this.trip_risk = trip_risk;
         this.trip_method = trip_method;
         this.trip_description = trip_description;
+        this.trip_end_date = trip_end_date;
+        this.trip_budget = trip_budget;
     }
 
     public Trip (String trip_name, String trip_destination, String trip_date, Boolean trip_risk,
-                 String trip_method, String trip_description){
+                 String trip_method, String trip_description, String trip_end_date, String trip_budget){
         this.trip_name = trip_name;
         this.trip_destination = trip_destination;
         this.trip_date = trip_date;
         this.trip_risk = trip_risk;
         this.trip_method = trip_method;
         this.trip_description = trip_description;
+        this.trip_end_date = trip_end_date;
+        this.trip_budget = trip_budget;
     }
 
     public long getTid(){
@@ -86,5 +92,21 @@ public class Trip {
 
     public void setTrip_description(String trip_description){
         this.trip_description = trip_description;
+    }
+
+    public String getTrip_enddate() {
+        return trip_end_date;
+    }
+
+    public void setTrip_end_date(String trip_end_date) {
+        this.trip_end_date = trip_end_date;
+    }
+
+    public String getTrip_budget(){
+        return trip_budget;
+    }
+
+    public void setTrip_budget(String trip_budget){
+        this.trip_budget = trip_budget;
     }
 }

@@ -111,6 +111,26 @@
                 android:textColor="@color/red"
                 />
 
+            <TextView
+                android:id="@+id/editShowSelectedEndDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select End Date of Trip : "
+                android:layout_marginTop="20dp"
+                android:textSize="17dp"
+                />
+
+            <Button
+                android:id="@+id/editPickupEndDateBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="13dp"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@color/grey"
+                android:text="Select Date"
+                android:textSize="18sp"
+                app:icon="@drawable/ic_baseline_calendar_month_24" />
+
 
             <TextView
                 android:id="@+id/editRiskRadioTextView"
@@ -161,6 +181,25 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTripBudgetContainer"
+                android:hint="Set Budget for Trip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:endIconMode="clear_text"
+                app:startIconDrawable="@drawable/ic_baseline_monetization_on_24"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTripBudgetTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
 

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TripDBHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     private static final String DATABASE_NAME = "m_expense_db";
     private static final String TABLE_NAME = "trip";
@@ -23,10 +23,14 @@ public class TripDBHelper extends SQLiteOpenHelper {
     private static final String ID_COLUMN = "tid";
     private static final String NAME_COLUMN = "trip_name";
     private static final String DESTINATION_COLUMN = "trip_destination";
-    private static final String DATE_COLUMN = "trip_date";
+    private static final String DATE_COLUMN = "trip_start_date";
     private static final String RISK_COLUMN = "trip_risk";
     private static final String METHOD_COLUMN = "trip_method";
     private static final String DESCRIPTION_COLUMN = "trip_description";
+
+
+    private static final String END_DATE_COLUMN = "trip_end_date";
+    private static final String BUDGET_COLUMN = "trip_budget";
 
 
     public TripDBHelper(@Nullable Context context) {
@@ -44,7 +48,9 @@ public class TripDBHelper extends SQLiteOpenHelper {
                 DATE_COLUMN + " text NOT NULL," +
                 RISK_COLUMN + " boolean NOT NULL,"+
                 METHOD_COLUMN + " text," +
-                DESCRIPTION_COLUMN + " text" +
+                DESCRIPTION_COLUMN + " text, " +
+                END_DATE_COLUMN + " text, " +
+                BUDGET_COLUMN + " text " +
                 ")";
         sqLiteDatabase.execSQL(tableCreate); //create table trip
     }
@@ -64,8 +70,10 @@ public class TripDBHelper extends SQLiteOpenHelper {
         values.put(DATE_COLUMN,trip.getTrip_date());
         values.put(RISK_COLUMN,trip.getTrip_risk());
         values.put(METHOD_COLUMN,trip.getTrip_method());
-        values.put(DESCRIPTION_COLUMN,trip.getTrip_description()
-        );
+        values.put(DESCRIPTION_COLUMN,trip.getTrip_description());
+        values.put(END_DATE_COLUMN,trip.getTrip_enddate());
+        values.put(BUDGET_COLUMN,trip.getTrip_budget());
+
 
         return database.insert(TABLE_NAME,null,values);
     }
@@ -90,7 +98,9 @@ public class TripDBHelper extends SQLiteOpenHelper {
                 boolean risk = results.getInt(4) > 0;
                 String method = results.getString(5);
                 String description = results.getString(6);
-                tripList.add(new Trip(id,name,destinaiton,date,risk,method,description));
+                String end_date = results.getString(7);
+                String budget = results.getString(8);
+                tripList.add(new Trip(id,name,destinaiton,date,risk,method,description,end_date,budget));
             } while (results.moveToNext());
         }
         results.close();
@@ -112,6 +122,32 @@ public class TripDBHelper extends SQLiteOpenHelper {
 
     }
 
+    public Trip getTripDetail(long tid){
+        SQLiteDatabase database = this.getReadableDatabase();
+
+
+        Trip tripDetail = null;
+        String query = "SELECT * FROM "+ TABLE_NAME + " WHERE "+ ID_COLUMN + " = "+ tid;
+
+        Cursor results = database.rawQuery(query,null);
+
+        if(results.moveToFirst()){
+            long id = Long.parseLong(results.getString(0));
+            String name = results.getString(1);
+            String destinaiton = results.getString(2);
+            String date = results.getString(3);
+            boolean risk = results.getInt(4) > 0;
+            String method = results.getString(5);
+            String description = results.getString(6);
+            String end_date = results.getString(7);
+            String budget = results.getString(8);
+            tripDetail = new Trip(id,name,destinaiton,date,risk,method,description,end_date,budget);
+        }
+        results.close();
+
+        return  tripDetail;
+    }
+
     public void updateTrip (Trip trip){
         ContentValues values = new ContentValues();
         values.put(ID_COLUMN,trip.getTid());
@@ -121,6 +157,8 @@ public class TripDBHelper extends SQLiteOpenHelper {
         values.put(RISK_COLUMN,trip.getTrip_risk());
         values.put(METHOD_COLUMN,trip.getTrip_method());
         values.put(DESCRIPTION_COLUMN,trip.getTrip_description());
+        values.put(END_DATE_COLUMN, trip.getTrip_enddate());
+        values.put(BUDGET_COLUMN,trip.getTrip_budget());
         SQLiteDatabase db = this.getWritableDatabase();
         db.update(TABLE_NAME, values, ID_COLUMN + " = ?", new String[]{String.valueOf(trip.getTid())});
     }
@@ -147,7 +185,9 @@ public class TripDBHelper extends SQLiteOpenHelper {
                 boolean risk = results.getInt(4) > 0;
                 String method = results.getString(5);
                 String description = results.getString(6);
-                searchtripList.add(new Trip(id,name,destinaiton,date,risk,method,description));
+                String end_date = results.getString(7);
+                String budget = results.getString(8);
+                searchtripList.add(new Trip(id,name,destinaiton,date,risk,method,description,end_date,budget));
             } while (results.moveToNext());
         }
         results.close();
@@ -197,12 +237,16 @@ public class TripDBHelper extends SQLiteOpenHelper {
                 boolean risk = results.getInt(4) > 0;
                 String method = results.getString(5);
                 String description = results.getString(6);
-                searchtripList.add(new Trip(id,name,destinaiton,date,risk,method,description));
+                String end_date = results.getString(7);
+                String budget = results.getString(8);
+                searchtripList.add(new Trip(id,name,destinaiton,date,risk,method,description,end_date,budget));
             } while (results.moveToNext());
         }
         results.close();
         return searchtripList;
     }
+
+
 
 
 }

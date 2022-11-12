@@ -3,11 +3,9 @@ package com.example.trip;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 
@@ -61,6 +59,8 @@ public class TripApater extends RecyclerView.Adapter<TripViewHolder> implements 
                 intent.putExtra("risk", risk);
                 intent.putExtra("method", trip.getTrip_method());
                 intent.putExtra("description", trip.getTrip_description());
+                intent.putExtra("enddate",trip.getTrip_enddate());
+                intent.putExtra("budget",trip.getTrip_budget());
                 context.startActivity(intent);
             }
         });
@@ -81,9 +81,11 @@ public class TripApater extends RecyclerView.Adapter<TripViewHolder> implements 
                 intent.putExtra("name", trip.getTrip_name());
                 intent.putExtra("destination", trip.getTrip_destination());
                 intent.putExtra("date", trip.getTrip_date());
-                intent.putExtra("risk",risk);
+                intent.putExtra("risk", risk);
                 intent.putExtra("method", trip.getTrip_method());
                 intent.putExtra("description", trip.getTrip_description());
+                intent.putExtra("enddate",trip.getTrip_enddate());
+                intent.putExtra("budget",trip.getTrip_budget());
                 context.startActivity(intent);
             }
         });

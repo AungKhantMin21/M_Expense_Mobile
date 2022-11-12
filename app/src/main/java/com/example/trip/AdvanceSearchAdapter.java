@@ -55,6 +55,8 @@ public class AdvanceSearchAdapter extends RecyclerView.Adapter<AdvanceSearchView
                 intent.putExtra("risk", risk);
                 intent.putExtra("method", trip.getTrip_method());
                 intent.putExtra("description", trip.getTrip_description());
+                intent.putExtra("enddate",trip.getTrip_enddate());
+                intent.putExtra("budget",trip.getTrip_budget());
                 context.startActivity(intent);
             }
         });

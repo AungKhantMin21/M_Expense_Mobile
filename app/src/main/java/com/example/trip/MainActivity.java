@@ -24,13 +24,13 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button bSubmit, bPickUpDateBtn, bCancel;
+    Button bSubmit, bPickUpDateBtn, bCancel, bPickUpEndDateBtn;
 
-    TextInputEditText etTripName, etDestination, etDescription;
+    TextInputEditText etTripName, etDestination, etDescription, etBudget;
 
     TextInputLayout lyTripName, lyDestination, lyDescription;
 
-    TextView showSelectedDate;
+    TextView showSelectedDate,showSelectedEndDate, dateHelpText;
 
     AutoCompleteTextView travelDropDown;
 
@@ -65,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
         riskButton = (RadioButton) findViewById(R.id.riskBtn);
         noriskButton = (RadioButton) findViewById(R.id.noriskBtn);
 
+        dateHelpText = findViewById(R.id.dateHelpText);
+
+        etBudget = findViewById(R.id.tripBudgetTextField);
+
 
         dbHelper = new TripDBHelper(this);
 
@@ -84,13 +88,13 @@ public class MainActivity extends AppCompatActivity {
 
         //======================== DATE PICKER START HERE =============================
 
-        bPickUpDateBtn = findViewById(R.id.pickupDateBtn);
+        bPickUpDateBtn = findViewById(R.id.pickupStartDateBtn);
 
-        showSelectedDate = findViewById(R.id.showSelectedDateTextView);
+        showSelectedDate = findViewById(R.id.showSelectedStartDateTextView);
 
         MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
 
-        materialDateBuilder.setTitleText("SELECT A DATE");
+        materialDateBuilder.setTitleText("SELECT A START DATE");
 
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
@@ -109,13 +113,42 @@ public class MainActivity extends AppCompatActivity {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onPositiveButtonClick(Object selection) {
-                        showSelectedDate.setText("Select Date of Trip : " + materialDatePicker.getHeaderText());
+                        showSelectedDate.setText("Select Start Date of Trip : " + materialDatePicker.getHeaderText());
                     }
                 }
         );
         //===================== DATE PICKER END HERE ================================
 
 
+        bPickUpEndDateBtn = findViewById(R.id.pickupEndDateBtn);
+
+        showSelectedEndDate = findViewById(R.id.showSelectedEndDateTextView);
+
+        MaterialDatePicker.Builder materialEndDateBuilder = MaterialDatePicker.Builder.datePicker();
+
+        materialEndDateBuilder.setTitleText("SELECT AN END START DATE");
+
+        final MaterialDatePicker materialEndDatePicker = materialEndDateBuilder.build();
+
+        bPickUpEndDateBtn.setOnClickListener(
+                new View.OnClickListener(){
+
+                    @Override
+                    public void onClick(View view) {
+                        materialEndDatePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+                    }
+                }
+        );
+
+        materialEndDatePicker.addOnPositiveButtonClickListener(
+                new MaterialPickerOnPositiveButtonClickListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onPositiveButtonClick(Object selection) {
+                        showSelectedEndDate.setText("Select End Date of Trip : " + materialEndDatePicker.getHeaderText());
+                    }
+                }
+        );
 
         //=====================Form Validation Start Here=============================
 
@@ -140,7 +173,16 @@ public class MainActivity extends AppCompatActivity {
                     lyDestination.setError("This field is required.");
                     return false;
                 }
+
+                String date = showSelectedDate.getText().toString();
+                String trip_date = date.substring(28);
+                if(trip_date.length() <= 0){
+                    dateHelpText.setText("This field is required.");
+                    return false;
+                }
                 return true;
+
+
             }
         });
 
@@ -160,10 +202,15 @@ public class MainActivity extends AppCompatActivity {
         String trip_name =etTripName.getText().toString();
         String trip_destination = etDestination.getText().toString();
         String trip_description = null;
-        String trip_method = travelDropDown.getText().toString();
+        String trip_method = null;
 
         String date = showSelectedDate.getText().toString();
-        String trip_date = date.substring(22);
+        String trip_date = date.substring(28);
+
+        String end_date = showSelectedEndDate.getText().toString();
+        String trip_end_date = end_date.substring(26);
+
+        String trip_budget = null;
 
         Boolean trip_risk;
         if(riskButton.isChecked()){
@@ -176,7 +223,19 @@ public class MainActivity extends AppCompatActivity {
             trip_description = etDescription.getText().toString();
         }
 
-        Trip trip = new Trip(trip_name,trip_destination, trip_date, trip_risk, trip_method,trip_description);
+        if(travelDropDown.getText().toString().length() != 0){
+            trip_method =travelDropDown.getText().toString();
+        }
+
+        if(etBudget.length() != 0){
+            trip_budget = etBudget.getText().toString();
+        }
+
+        if(trip_end_date.length() <=1){
+            trip_end_date = null;
+        }
+
+        Trip trip = new Trip(trip_name,trip_destination, trip_date, trip_risk, trip_method,trip_description,trip_end_date,trip_budget);
 
         long id = dbHelper.addTrip(trip);
 

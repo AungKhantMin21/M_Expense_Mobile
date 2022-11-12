@@ -108,6 +108,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="30dp">
+            <TextView
+                android:id="@+id/detailTripBudgetLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:text="Trip Budget"/>
+            <TextView
+                android:id="@+id/detailTripBudget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18dp"
+                android:padding="15dp"
+                android:textAlignment="center"
+                android:background="@drawable/roundedborder"
+                android:textColor="@color/black"
+                android:text="$ 15000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_marginTop="35dp">
 
             <ImageView
@@ -174,6 +201,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/detailTripDescriptionLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
